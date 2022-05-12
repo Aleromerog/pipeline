@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: commit
+spec:
+  steps:
+    - name: commit
+      image: ubuntu
+      script: |
+        #!/bin/bash
+        echo "Goodbye World!"  

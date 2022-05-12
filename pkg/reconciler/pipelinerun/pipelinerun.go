@@ -863,6 +863,11 @@ func getTaskrunWorkspaces(pr *v1beta1.PipelineRun, rprt *resources.ResolvedPipel
 	}
 	for _, ws := range rprt.PipelineTask.Workspaces {
 		taskWorkspaceName, pipelineTaskSubPath, pipelineWorkspaceName := ws.Name, ws.SubPath, ws.Workspace
+
+		if pipelineWorkspaceName == "" {
+			return nil, "", fmt.Errorf("Empty worskapce name AAAAAAAAA:)")
+		}
+
 		if b, hasBinding := pipelineRunWorkspaces[pipelineWorkspaceName]; hasBinding {
 			if b.PersistentVolumeClaim != nil || b.VolumeClaimTemplate != nil {
 				pipelinePVCWorkspaceName = pipelineWorkspaceName

@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: pipeline
+spec:
+  workspaces:
+    - name: source
+  tasks:
+    - name: gen-code
+      taskRef:
+        name: gen-code # gen-code expects a Workspace named "source"
+      workspaces:
+        - name: source
+    - name: commit
+      taskRef:
+        name: commit # commit expects a Workspace named "source"
+      workspaces:
+        - name: source
+      runAfter:
+        - gen-code
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: piperun
+spec:
+  pipelineRef:
+    name: pipeline
+  workspaces:
+    - name: source
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce # access mode may affect how you can use this volume in parallel tasks
+          resources:
+            requests:
+              storage: 1Gi
