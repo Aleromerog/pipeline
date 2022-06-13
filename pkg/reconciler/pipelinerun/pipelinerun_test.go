@@ -7310,4 +7310,5 @@ spec:
 	if d := cmp.Diff(actual, expectedTaskRun, ignoreTypeMeta); d != "" {
 		t.Errorf("expected to see propagated metadata by the precedence from PipelineTaskRunSpec in TaskRun %v created. Diff %s", expectedTaskRun, diff.PrintWantGot(d))
 	}
+
 }
